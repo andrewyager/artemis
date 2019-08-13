@@ -20,6 +20,16 @@ spec:
       containers:
       - command:
         - ./postgres-entrypoint.sh
+        readinessProbe:
+          tcpSocket:
+            port: 5432
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: 5432
+          initialDelaySeconds: 15
+          periodSeconds: 20
         env:
         - name: DB_AUTOCLEAN
           valueFrom:

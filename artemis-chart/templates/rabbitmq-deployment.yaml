@@ -18,7 +18,17 @@ spec:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
     spec:
       containers:
-      - env:
+      - readinessProbe:
+          tcpSocket:
+            port: 5672
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: 5672
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        env:
         - name: RABBITMQ_DEFAULT_PASS
           valueFrom:
             configMapKeyRef:

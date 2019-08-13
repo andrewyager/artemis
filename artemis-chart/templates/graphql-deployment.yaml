@@ -24,6 +24,16 @@ spec:
       - args:
         - graphql-engine
         - serve
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 20
         env:
         - name: HASURA_GRAPHQL_ACCESS_KEY
           valueFrom:
